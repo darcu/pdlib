@@ -53,6 +53,10 @@ local function drawCenteredText(text, y)
 end
 
 
+---@class _Graphics
+---@field instanceSprite fun(params: { image: _Image, x: number, y: number }): _Sprite
+---@field setBg fun(bgCallback: function)
+---@field drawCenteredText fun(text: string, y: number)
 Graphics = {
   instanceSprite = instanceSprite,
   setBg = setBg,
