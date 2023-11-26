@@ -8,7 +8,7 @@ function _SoundManager(sounds)
   local samples = {}
 
   for key, fileName in pairs(sounds) do
-    samples[key] = snd.sampleplayer.new('sfx/' .. fileName)
+    samples[fileName] = snd.sampleplayer.new('sfx/' .. fileName)
   end
 
   return {

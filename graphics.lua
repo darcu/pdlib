@@ -54,10 +54,14 @@ end
 
 
 ---@class _Graphics
+---@field initSprite fun(image: _Image, cx: number?, cy: number?): _Sprite
+---@field addSpriteAt fun(sprite: _Sprite, x: number, y: number): _Sprite
 ---@field instanceSprite fun(params: { image: _Image, x: number, y: number }): _Sprite
 ---@field setBg fun(bgCallback: function)
 ---@field drawCenteredText fun(text: string, y: number)
 Graphics = {
+  initSprite = initSprite,
+  addSpriteAt = addSpriteAt,
   instanceSprite = instanceSprite,
   setBg = setBg,
   drawCenteredText = drawCenteredText,
