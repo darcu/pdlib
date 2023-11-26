@@ -1,0 +1,33 @@
+{
+  "Lua.workspace.library": [
+    "$PLAYDATE_SDK_PATH/CoreLibs/",
+    "$HOME/playdate/playdate-luacats"
+  ],
+  "Lua.diagnostics.globals": [
+    "import"
+  ],
+  "Lua.runtime.nonstandardSymbol": [
+    "+=",
+    "-=",
+    "*=",
+    "/=",
+    "//=",
+    "%=",
+    "<<=",
+    ">>=",
+    "&=",
+    "|=",
+    "^="
+  ],
+  "Lua.diagnostics.severity": {
+    "duplicate-set-field": "Hint"
+  },
+  "Lua.format.defaultConfig": {
+    "indent_style": "space",
+    "indent_size": "2"
+  },
+  "playdate-debug.sdkPath": "$HOME/PlaydateSDK",
+  "playdate-debug.sourcePath": "src",
+  "playdate-debug.outputPath": "dist",
+  "playdate-debug.productName": "VD"
+}
