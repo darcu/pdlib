@@ -1,7 +1,9 @@
+---@alias Settings { get: fun(key: string), set: fun(key: string, value: any) }
 ---@alias _Settings fun(): table
 
 
 ---@param settings table
+---@return Settings
 function _Settings(settings)
   return {
     get = function(key)
