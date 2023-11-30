@@ -1,33 +1,33 @@
-import "settings"
 import "soundManager"
 
 local gfx <const> = playdate.graphics
 
 
----@class _Scene
----@field init fun(args?: any)
----@field update function
----@field bgDraw function
+---@class Scene
+---@field update fun(manager: SceneManager)
 ---@field cleanup? function
 
----@class _SceneManager
----@field currentScene _Scene
----@field settings { get: fun(string): any, set: fun(string): any }
+---@alias _Scene fun(manager: SceneManager, args?: table<string, any>): Scene
+
+---@class SceneManager
+---@field currentScene Scene
+---@field settings table<string, any>
 ---@field soundManager SoundManager
----@field update fun(self: _SceneManager)
----@field changeScene fun(self: _SceneManager, newScene: string, args?: table<string, any>)
+---@field update fun(self: SceneManager)
+---@field changeScene fun(self: SceneManager, newScene: string, args?: table<string, any>)
 
 
 ---@class InitParams
----@field settings Settings
+---@field settings table<string, any>
 ---@field sounds table<string, string>
----@field scenes table<string, _Scene>
+---@field _scenes table<string, _Scene>
 
 ---@param initParams InitParams
+---@return SceneManager
 function _SceneManager(initParams)
   return {
     currentScene = nil,
-    settings = _Settings(initParams.settings),
+    settings = initParams.settings,
     soundManager = _SoundManager(initParams.sounds),
     update = function(self)
       if self.currentScene and self.currentScene.update then
@@ -41,11 +41,11 @@ function _SceneManager(initParams)
         self.currentScene.cleanup()
       end
 
-      if initParams.scenes[newScene] == nil then
+      if initParams._scenes[newScene] == nil then
         error("Invalid scene: " .. newScene)
       end
 
-      self.currentScene = initParams.scenes[newScene](self, args)
+      self.currentScene = initParams._scenes[newScene](self, args)
     end,
   }
 end
