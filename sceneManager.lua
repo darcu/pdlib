@@ -4,14 +4,15 @@ local gfx <const> = playdate.graphics
 
 
 ---@class Scene
----@field update fun(manager: SceneManager)
+---@field update? fun(manager: SceneManager)
 ---@field cleanup? function
 
 ---@alias _Scene fun(manager: SceneManager, args?: table<string, any>): Scene
 
 ---@class SceneManager
----@field currentScene Scene
+---@field currentScene Scene?
 ---@field settings table<string, any>
+---@field scenes table<string, _Scene>
 ---@field soundManager SoundManager
 ---@field update fun(self: SceneManager)
 ---@field changeScene fun(self: SceneManager, newScene: string, args?: table<string, any>)
@@ -25,13 +26,15 @@ local gfx <const> = playdate.graphics
 ---@param initParams InitParams
 ---@return SceneManager
 function _SceneManager(initParams)
+  ---@type SceneManager
   return {
     currentScene = nil,
     settings = initParams.settings,
     soundManager = _SoundManager(initParams.sounds),
+    scenes = initParams._scenes,
     update = function(self)
       if self.currentScene and self.currentScene.update then
-        self.currentScene.update()
+        self.currentScene.update(self)
       end
     end,
     changeScene = function(self, newScene, args)
@@ -41,11 +44,11 @@ function _SceneManager(initParams)
         self.currentScene.cleanup()
       end
 
-      if initParams._scenes[newScene] == nil then
+      if self.scenes[newScene] == nil then
         error("Invalid scene: " .. newScene)
       end
 
-      self.currentScene = initParams._scenes[newScene](self, args)
+      self.currentScene = self.scenes[newScene](self, args)
     end,
   }
 end
