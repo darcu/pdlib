@@ -7,8 +7,8 @@ local snd = playdate.sound
 function _SoundManager(sounds)
   local samples = {}
 
-  for key, fileName in pairs(sounds) do
-    samples[fileName] = snd.sampleplayer.new('sfx/' .. fileName)
+  for key, path in pairs(sounds) do
+    samples[path] = snd.sampleplayer.new(path)
   end
 
   return {
