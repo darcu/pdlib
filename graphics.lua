@@ -1,32 +1,36 @@
 local gfx <const> = playdate.graphics
 
----@param params { image: _Image, cx: number?, cy: number? }
+---@param image _Image
+---@param cx? number
+---@param cy? number
 ---@return _Sprite
-local function initSprite(params)
-  local sprite = gfx.sprite.new(params.image)
+local function initSprite(image, cx, cy)
+  local sprite = gfx.sprite.new(image)
 
-  sprite:setCenter(params.cx or 0, params.cy or 0)
+  sprite:setCenter(cx or 0, cy or 0)
 
   return sprite
 end
 
 
----@param params { sprite: _Sprite, x: number, y: number }
+---@param sprite _Sprite
+---@param x? number
+---@param y? number
 ---@return _Sprite
-local function addSpriteAt(params)
-  params.sprite:moveTo(params.x, params.y)
-  params.sprite:add()
+local function addSpriteAt(sprite, x, y)
+  sprite:moveTo(x or 0, y or 0)
+  sprite:add()
 
-  return params.sprite
+  return sprite
 end
 
 
----@param params { image: _Image, x: number, y: number }
+---@param params { image: _Image, x?: number, y?: number, cx?: number, cy?: number }
 ---@return _Sprite
 local function instanceSprite(params)
-  local sprite = initSprite({ image = params.image })
+  local sprite = initSprite(params.image, params.cx, params.cy)
 
-  return addSpriteAt({ sprite = sprite, x = params.x, y = params.y })
+  return addSpriteAt(sprite, params.x, params.y)
 end
 
 
